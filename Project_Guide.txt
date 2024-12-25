@@ -1,0 +1,90 @@
+
+# Step-by-Step Guide to use models in django for authentication instead of using default django_auth
+
+This guide explains how to set up a Django project named `model_auth` with two registered apps (`app1` and `app2`) as described in the uploaded codebase. 
+
+ Prerequisites
+1. Python 3.8 or higher installed.
+2. Django 4.2 or higher installed.
+3. A text editor or IDE (e.g., VS Code, PyCharm).
+4. Basic knowledge of Django and Python.
+
+---
+
+ 1. Create the Django Project
+```bash
+django-admin startproject model_auth
+cd model_auth
+```
+
+ 2. Create the Apps
+```bash
+python manage.py startapp app1
+python manage.py startapp app2
+```
+
+ 3. Update `model_auth/settings.py`
+- Add `app1` and `app2` to `INSTALLED_APPS`.
+- Define authentication backends as per the uploaded file:
+```python
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'app1.auth_backends.StudentAuthenticationBackend',
+    'app2.auth_backends.StaffAuthenticationBackend',
+]
+```
+
+ 4. Define Models in Each App
+
+ `app1/models.py`
+- Define the `Student` model extending `AbstractUser`.
+- Automatically generate `student_id`, validate mobile numbers, and set passwords based on `date_of_birth`.
+
+ `app2/models.py`
+- Define the `Staff` model similar to `Student` with its own fields and authentication logic.
+
+ 5. Configure Forms
+- Create forms for both `Student` and `Staff` for login and CRUD operations.
+- Use Django's `forms` module for custom validation.
+
+ 6. Configure Views
+- Implement `ListView`, `CreateView`, and `FormView` in both apps for CRUD operations and authentication.
+- Include generic and custom views for login, logout, and management dashboards.
+
+ 7. Create URL Patterns
+- Define `urlpatterns` in each app to map views to URLs.
+- Update the main `urls.py` to include app-specific URLs.
+
+ 8. Add Templates
+- Create HTML templates for:
+  - Login pages (`student_login.html`, `staff_login.html`).
+  - Management dashboards (`student_list.html`, `staff_list.html`).
+  - Homepages for both apps.
+
+ 9. Implement Signals
+- Use Django signals (`post_migrate`, `post_save`) to automatically assign `Student` and `Staff`(signals.py) to respective groups upon creation for both apps.
+
+ 10. Authentication Backends
+- Implement custom authentication backends (`auth_backends.py`) for both apps.
+
+ 11. Test and Debug
+   -create a superuser
+    ``bash
+    python manage.py createsuperuser
+    -navigate to admin 'http://127.0.0.1:8000/admin'
+    -under groups create add group and create Students and Staffs group names
+- Run migrations to set up the database:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+- Test the application by running the development server:
+```bash
+python manage.py runserver
+```
+
+Refer to the detailed uploaded codebase for exact implementation.
+
+---
+
+Enjoy coding!
