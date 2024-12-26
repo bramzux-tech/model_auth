@@ -1,4 +1,5 @@
 
+
  Django Project: model_auth
 
  Overview
@@ -137,11 +138,23 @@ pip install django
 python manage.py makemigrations
 python manage.py migrate
 ```
-3. Start the development server:
+3. Activate virtual environment
+```bash
+windows:
+cd path\to\your\project 
+python -m venv myvenv
+cmd: myvenv\Scripts\activate
+powershell: .\myvenv\Scripts\Activate
+gitbash: source myvenv/Scripts/activate
+
+linux:
+source myvenv/bin/activate
+
+4. Start the development server:
 ```bash
 python manage.py runserver
 ```
-4. Access the application at `http://127.0.0.1:8000/`.
+5. Access the application at `http://127.0.0.1:8000/`.
 
 ---
 
